@@ -1,0 +1,74 @@
+/* Estilo CSS Padronizado para Relatórios PDF (mPDF) - Map-OS */
+body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 9pt;
+    color: #2D3748;
+    line-height: 1.4;
+}
+
+.report-header {
+    width: 100%;
+    border-bottom: 2px solid #2D335B;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.report-header table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.report-title {
+    font-size: 13pt;
+    font-weight: bold;
+    color: #2D335B;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+}
+
+.report-info {
+    font-size: 8.5pt;
+    color: #4A5568;
+}
+
+.report-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.report-table th {
+    background-color: #2D335B;
+    color: #FFFFFF;
+    font-size: 8.5pt;
+    font-weight: bold;
+    padding: 7px 6px;
+    text-align: left;
+    border: 1px solid #2D335B;
+}
+
+.report-table td {
+    padding: 6px;
+    font-size: 8.5pt;
+    border: 1px solid #E2E8F0;
+    color: #2D3748;
+}
+
+.report-table tr:nth-child(even) td {
+    background-color: #F8FAFC;
+}
+
+.report-table tr.total-row td {
+    font-weight: bold;
+    background-color: #EDF2F7;
+    border-top: 2px solid #CBD5E0;
+    font-size: 9pt;
+}
+
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.text-left { text-align: left; }
+
+.badge-success { color: #276749; font-weight: bold; }
+.badge-warning { color: #D69E2E; font-weight: bold; }
+.badge-danger { color: #C53030; font-weight: bold; }
