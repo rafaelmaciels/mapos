@@ -1,0 +1,10 @@
+# Força o servidor a carregar o index.php ao acessar a pasta raiz
+DirectoryIndex index.php
+
+
+    RewriteEngine On
+    # Atualizado para o seu novo caminho
+    RewriteBase /sistemas/rmsollutions/
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ index.php/$1 [L]

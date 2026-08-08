@@ -31,3 +31,4 @@ application/.env
 assets/userImage
 backups_deploy/
 *.bak
+scratch*
