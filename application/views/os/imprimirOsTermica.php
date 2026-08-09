@@ -194,7 +194,8 @@ if (!empty($result->cidade) || !empty($result->estado) || !empty($result->cep)) 
                                 <tr>
                                     <th>Qtd</th>
                                     <th>Produto</th>
-                                    <th>Unitário</th>
+                                    <th>Unit.</th>
+                                    <th>Desc.</th>
                                     <th>Subtotal</th>
                                 </tr>
                             </thead>
@@ -202,16 +203,25 @@ if (!empty($result->cidade) || !empty($result->estado) || !empty($result->cep)) 
                                 <?php
                                 foreach ($produtos as $p) {
                                     $totalProdutos = $totalProdutos + $p->subTotal;
+                                    $descontoTexto = '-';
+                                    if (isset($p->desconto) && $p->desconto > 0) {
+                                        if ($p->tipo_desconto == 'porcento') {
+                                            $descontoTexto = number_format($p->desconto, 2, ',', '.') . '%';
+                                        } else {
+                                            $descontoTexto = 'R$ ' . number_format($p->valor_desconto ?: $p->desconto, 2, ',', '.');
+                                        }
+                                    }
                                     echo '<tr>';
                                     echo '<td>' . $p->quantidade . '</td>';
                                     echo '<td>' . $p->descricao . '</td>';
-                                    echo '<td>R$ ' . $p->preco ?: $p->precoVenda . '</td>';
+                                    echo '<td>R$ ' . number_format($p->preco ?: $p->precoVenda, 2, ',', '.') . '</td>';
+                                    echo '<td>' . $descontoTexto . '</td>';
                                     echo '<td>R$ ' . number_format($p->subTotal, 2, ',', '.') . '</td>';
                                     echo '</tr>';
                                 } ?>
 
                                 <tr>
-                                    <td colspan="3" style="text-align: right"><strong>Total:</strong></td>
+                                    <td colspan="4" style="text-align: right"><strong>Total Produtos:</strong></td>
                                     <td><strong>R$ <?php echo number_format($totalProdutos, 2, ',', '.'); ?></strong></td>
                                 </tr>
                             </tbody>
@@ -223,25 +233,35 @@ if (!empty($result->cidade) || !empty($result->estado) || !empty($result->cep)) 
                                 <tr>
                                     <th>Qtd</th>
                                     <th>Serviço</th>
-                                    <th>Unitário</th>
+                                    <th>Unit.</th>
+                                    <th>Desc.</th>
                                     <th>Subtotal</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php setlocale(LC_MONETARY, 'en_US');
-                        foreach ($servicos as $s) {
-                            $preco = $s->preco ?: $s->precoVenda;
-                            $subtotal = $preco * ($s->quantidade ?: 1);
-                            $totalServico = $totalServico + $subtotal;
-                            echo '<tr>';
-                            echo '<td>' . ($s->quantidade ?: 1) . '</td>';
-                            echo '<td>' . $s->nome . '</td>';
-                            echo '<td>R$ ' . $preco . '</td>';
-                            echo '<td>R$ ' . number_format($subtotal, 2, ',', '.') . '</td>';
-                            echo '</tr>';
-                        } ?>
+                                foreach ($servicos as $s) {
+                                    $preco = $s->preco ?: $s->precoVenda;
+                                    $subtotal = isset($s->subTotal) && $s->subTotal !== null ? $s->subTotal : ($preco * ($s->quantidade ?: 1));
+                                    $totalServico = $totalServico + $subtotal;
+                                    $descontoTexto = '-';
+                                    if (isset($s->desconto) && $s->desconto > 0) {
+                                        if ($s->tipo_desconto == 'porcento') {
+                                            $descontoTexto = number_format($s->desconto, 2, ',', '.') . '%';
+                                        } else {
+                                            $descontoTexto = 'R$ ' . number_format($s->valor_desconto ?: $s->desconto, 2, ',', '.');
+                                        }
+                                    }
+                                    echo '<tr>';
+                                    echo '<td>' . ($s->quantidade ?: 1) . '</td>';
+                                    echo '<td>' . $s->nome . '</td>';
+                                    echo '<td>R$ ' . number_format($preco, 2, ',', '.') . '</td>';
+                                    echo '<td>' . $descontoTexto . '</td>';
+                                    echo '<td>R$ ' . number_format($subtotal, 2, ',', '.') . '</td>';
+                                    echo '</tr>';
+                                } ?>
                                 <tr>
-                                    <td colspan="3" style="text-align: right"><strong>Total:</strong></td>
+                                    <td colspan="4" style="text-align: right"><strong>Total Serviços:</strong></td>
                                     <td><strong>R$ <?php echo number_format($totalServico, 2, ',', '.'); ?></strong></td>
                                 </tr>
                             </tbody>

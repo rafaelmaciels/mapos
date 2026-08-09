@@ -85,6 +85,22 @@ if (! function_exists('getAmount')) {
     }
 }
 
+if (! function_exists('json_decode_legacy')) {
+    function json_decode_legacy(?string $raw): mixed
+    {
+        if (empty($raw)) {
+            return null;
+        }
+
+        $decoded = json_decode($raw, true);
+        if ($decoded === null && json_last_error() !== JSON_ERROR_NONE) {
+            $decoded = @unserialize($raw, ['allowed_classes' => false]);
+        }
+
+        return $decoded;
+    }
+}
+
 if (! function_exists('parseGarantiaTags')) {
     function parseGarantiaTags($html, $context = [])
     {

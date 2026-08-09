@@ -227,21 +227,31 @@ $totalProdutos = 0; ?>
                     <td>Produto</td>
                     <td>Quantidade</td>
                     <td>Preço unit.</td>
+                    <td>Desconto</td>
                     <td style="text-align: center">Sub-total</td>
                 </tr>
 
                 <?php foreach ($produtos as $p) {
                     $totalProdutos = $totalProdutos + $p->subTotal;
+                    $descontoTexto = '-';
+                    if (isset($p->desconto) && $p->desconto > 0) {
+                        if ($p->tipo_desconto == 'porcento') {
+                            $descontoTexto = number_format($p->desconto, 2, ',', '.') . '%';
+                        } else {
+                            $descontoTexto = 'R$ ' . number_format($p->valor_desconto ?: $p->desconto, 2, ',', '.');
+                        }
+                    }
                     echo '<tr class="item">';
                     echo '<td>' . $p->descricao . '</td>';
                     echo '<td>' . $p->quantidade . '</td>';
-                    echo '<td>' . $p->preco ?: $p->precoVenda . '</td>';
+                    echo '<td>R$ ' . number_format($p->preco ?: $p->precoVenda, 2, ',', '.') . '</td>';
+                    echo '<td>' . $descontoTexto . '</td>';
                     echo '<td style="text-align: center">R$ ' . number_format($p->subTotal, 2, ',', '.') . '</td>';
                     echo '</tr>';
                 } ?>
 
                 <tr class="item">
-                    <td colspan="3"></td>
+                    <td colspan="4"></td>
                     <td style="text-align: center"><strong>Total em Produtos: R$ <?= number_format($totalProdutos, 2, ',', '.'); ?></strong></td>
                 </tr>
             <?php } ?>
@@ -252,23 +262,33 @@ $totalProdutos = 0; ?>
                     <td>Serviço</td>
                     <td>Quantidade</td>
                     <td>Preço unit.</td>
+                    <td>Desconto</td>
                     <td style="text-align: center">Sub-total</td>
                 </tr>
 
                 <?php foreach ($servicos as $s) {
                     $preco = $s->preco ?: $s->precoVenda;
-                    $subtotal = $preco * ($s->quantidade ?: 1);
+                    $subtotal = isset($s->subTotal) && $s->subTotal !== null ? $s->subTotal : ($preco * ($s->quantidade ?: 1));
                     $totalServico = $totalServico + $subtotal;
+                    $descontoTexto = '-';
+                    if (isset($s->desconto) && $s->desconto > 0) {
+                        if ($s->tipo_desconto == 'porcento') {
+                            $descontoTexto = number_format($s->desconto, 2, ',', '.') . '%';
+                        } else {
+                            $descontoTexto = 'R$ ' . number_format($s->valor_desconto ?: $s->desconto, 2, ',', '.');
+                        }
+                    }
                     echo '<tr class="item">';
                     echo '<td>' . $s->nome . '</td>';
                     echo '<td>' . ($s->quantidade ?: 1) . '</td>';
-                    echo '<td>' . $preco . '</td>';
-                    echo '<td>R$ ' . number_format($subtotal, 2, ',', '.') . '</td>';
+                    echo '<td>R$ ' . number_format($preco, 2, ',', '.') . '</td>';
+                    echo '<td>' . $descontoTexto . '</td>';
+                    echo '<td style="text-align: center">R$ ' . number_format($subtotal, 2, ',', '.') . '</td>';
                     echo '</tr>';
                 } ?>
 
                 <tr class="item">
-                    <td colspan="3"></td>
+                    <td colspan="4"></td>
                     <td style="text-align: center"><strong>Total em Serviços: R$ <?= number_format($totalServico, 2, ',', '.'); ?></strong></td>
                 </tr>
             <?php } ?>

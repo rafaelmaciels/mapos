@@ -174,7 +174,7 @@ class Relatorios_model extends CI_Model
         $subQuery1 = $this->db->get_compiled_select();
         $this->db->reset_query();
 
-        $this->db->select('clientes.idClientes, clientes.nomeCliente, produtos.idProdutos, produtos.descricao, produtos_os.quantidade, os.idOs as idRelacionado, os.dataInicial as dataOcorrencia, produtos_os.preco , (produtos_os.preco * produtos_os.quantidade) as precoTotal, "os" as origem');
+        $this->db->select('clientes.idClientes, clientes.nomeCliente, produtos.idProdutos, produtos.descricao, produtos_os.quantidade, os.idOs as idRelacionado, os.dataInicial as dataOcorrencia, produtos_os.preco , produtos_os.subTotal as precoTotal, "os" as origem');
         $this->db->from('os');
         $this->db->join('produtos_os', 'produtos_os.os_id = os.idOs');
         $this->db->join('clientes', 'clientes.idClientes = os.clientes_id');
@@ -200,7 +200,7 @@ class Relatorios_model extends CI_Model
         $subQuery1 = $this->db->get_compiled_select();
         $this->db->reset_query();
 
-        $this->db->select('clientes.idClientes, clientes.nomeCliente, produtos.idProdutos, produtos.descricao, produtos_os.quantidade, os.idOs as idRelacionado, os.dataInicial as dataOcorrencia, produtos_os.preco , (produtos_os.preco * produtos_os.quantidade) as precoTotal, "os" as origem');
+        $this->db->select('clientes.idClientes, clientes.nomeCliente, produtos.idProdutos, produtos.descricao, produtos_os.quantidade, os.idOs as idRelacionado, os.dataInicial as dataOcorrencia, produtos_os.preco , produtos_os.subTotal as precoTotal, "os" as origem');
         $this->db->from('os');
         $this->db->join('produtos_os', 'produtos_os.os_id = os.idOs');
         $this->db->join('clientes', 'clientes.idClientes = os.clientes_id');

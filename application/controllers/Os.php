@@ -703,9 +703,32 @@ class Os extends MY_Controller
                 ->set_output(json_encode($errors));
         }
 
-        $preco = $this->input->post('preco');
-        $quantidade = $this->input->post('quantidade');
-        $subtotal = $preco * $quantidade;
+        $preco = floatval($this->input->post('preco'));
+        $quantidade = floatval($this->input->post('quantidade'));
+        $grossTotal = $preco * $quantidade;
+
+        $descontoInput = floatval($this->input->post('desconto'));
+        $tipoDesconto = $this->input->post('tipo_desconto') ?: 'real';
+
+        $valorDescontoAplicado = 0.00;
+        if ($descontoInput > 0) {
+            if ($tipoDesconto === 'porcento') {
+                if ($descontoInput > 100) {
+                    $descontoInput = 100;
+                }
+                $valorDescontoAplicado = round(($grossTotal * ($descontoInput / 100)), 2);
+            } else {
+                if ($descontoInput > $grossTotal) {
+                    $descontoInput = $grossTotal;
+                }
+                $valorDescontoAplicado = round($descontoInput, 2);
+            }
+        } else {
+            $descontoInput = 0.00;
+            $tipoDesconto = null;
+        }
+
+        $subtotal = max(0, $grossTotal - $valorDescontoAplicado);
         $produto = $this->input->post('idProduto');
         $data = [
             'quantidade' => $quantidade,
@@ -713,6 +736,9 @@ class Os extends MY_Controller
             'produtos_id' => $produto,
             'preco' => $preco,
             'os_id' => $this->input->post('idOsProduto'),
+            'tipo_desconto' => $tipoDesconto,
+            'desconto' => $descontoInput,
+            'valor_desconto' => $valorDescontoAplicado,
         ];
 
         $id = $this->input->post('idOsProduto');
@@ -807,12 +833,42 @@ class Os extends MY_Controller
                 ->set_output(json_encode($errors));
         }
 
+        $preco = floatval($this->input->post('preco'));
+        $quantidade = floatval($this->input->post('quantidade'));
+        $grossTotal = $preco * $quantidade;
+
+        $descontoInput = floatval($this->input->post('desconto'));
+        $tipoDesconto = $this->input->post('tipo_desconto') ?: 'real';
+
+        $valorDescontoAplicado = 0.00;
+        if ($descontoInput > 0) {
+            if ($tipoDesconto === 'porcento') {
+                if ($descontoInput > 100) {
+                    $descontoInput = 100;
+                }
+                $valorDescontoAplicado = round(($grossTotal * ($descontoInput / 100)), 2);
+            } else {
+                if ($descontoInput > $grossTotal) {
+                    $descontoInput = $grossTotal;
+                }
+                $valorDescontoAplicado = round($descontoInput, 2);
+            }
+        } else {
+            $descontoInput = 0.00;
+            $tipoDesconto = null;
+        }
+
+        $subtotal = max(0, $grossTotal - $valorDescontoAplicado);
+
         $data = [
             'servicos_id' => $this->input->post('idServico'),
-            'quantidade' => $this->input->post('quantidade'),
-            'preco' => $this->input->post('preco'),
+            'quantidade' => $quantidade,
+            'preco' => $preco,
             'os_id' => $this->input->post('idOsServico'),
-            'subTotal' => $this->input->post('preco') * $this->input->post('quantidade'),
+            'subTotal' => $subtotal,
+            'tipo_desconto' => $tipoDesconto,
+            'desconto' => $descontoInput,
+            'valor_desconto' => $valorDescontoAplicado,
         ];
 
         if ($this->os_model->add('servicos_os', $data) == true) {

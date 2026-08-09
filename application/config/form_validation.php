@@ -408,6 +408,16 @@ $config = [
             'label' => 'idOsProduto',
             'rules' => 'trim|required|numeric',
         ],
+        [
+            'field' => 'desconto',
+            'label' => 'desconto',
+            'rules' => 'trim|numeric|greater_than[-1]',
+        ],
+        [
+            'field' => 'tipo_desconto',
+            'label' => 'tipo_desconto',
+            'rules' => 'trim',
+        ],
     ],
     'adicionar_servico_os' => [
         [
@@ -429,6 +439,16 @@ $config = [
             'field' => 'idOsServico',
             'label' => 'idOsServico',
             'rules' => 'trim|required|numeric',
+        ],
+        [
+            'field' => 'desconto',
+            'label' => 'desconto',
+            'rules' => 'trim|numeric|greater_than[-1]',
+        ],
+        [
+            'field' => 'tipo_desconto',
+            'label' => 'tipo_desconto',
+            'rules' => 'trim',
         ],
     ],
     'cobrancas' => [

@@ -216,7 +216,7 @@ foreach ($servicos as $s) {
                         <div class="tab-pane" id="tab3">
                             <div class="span12 well" style="padding: 1%; margin-left: 0">
                                 <form id="formProdutos" action="<?php echo base_url() ?>index.php/os/adicionarProduto" method="post">
-                                    <div class="span6">
+                                    <div class="span4">
                                         <input type="hidden" name="idProduto" id="idProduto" />
                                         <input type="hidden" name="idOsProduto" id="idOsProduto" value="<?php echo $result->idOs; ?>" />
                                         <input type="hidden" name="estoque" id="estoque" value="" />
@@ -231,6 +231,17 @@ foreach ($servicos as $s) {
                                         <label for="">Quantidade</label>
                                         <input type="text" placeholder="Quantidade" id="quantidade" name="quantidade"
                                             class="span12" />
+                                    </div>
+                                    <div class="span1">
+                                        <label for="">Tipo Desc.</label>
+                                        <select class="span12" name="tipo_desconto" id="tipo_desconto_produto" style="width: 100%;">
+                                            <option value="real">R$</option>
+                                            <option value="porcento">%</option>
+                                        </select>
+                                    </div>
+                                    <div class="span1">
+                                        <label for="">Desconto</label>
+                                        <input type="text" placeholder="0" id="desconto_produto" name="desconto" class="span12" />
                                     </div>
                                     <div class="span2">
                                         <label for="">&nbsp;</label>
@@ -248,27 +259,37 @@ foreach ($servicos as $s) {
                                                 <th>Produto</th>
                                                 <th width="8%">Quantidade</th>
                                                 <th width="10%">Preço unit.</th>
+                                                <th width="12%">Desconto</th>
                                                 <th width="6%">Ações</th>
                                                 <th width="10%">Sub-total</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php
-                    $total = 0;
-foreach ($produtos as $p) {
-    $total = $total + $p->subTotal;
-    echo '<tr>';
-    echo '<td>' . $p->descricao . '</td>';
-    echo '<td><div align="center">' . $p->quantidade . '</td>';
-    echo '<td><div align="center">R$: ' . ($p->preco ?: $p->precoVenda) . '</td>';
-    echo (strtolower($result->status) != "cancelado") ? '<td><div align="center"><a href="" idAcao="' . $p->idProdutos_os . '" prodAcao="' . $p->idProdutos . '" quantAcao="' . $p->quantidade . '" title="Excluir Produto" class="btn-nwe4"><i class="bx bx-trash-alt"></i></a></td>' : '<td></td>';
-    echo '<td><div align="center">R$: ' . number_format($p->subTotal, 2, ',', '.') . '</td>';
-    echo '</tr>';
-} ?>
+                                            $total = 0;
+                                            foreach ($produtos as $p) {
+                                                $total = $total + $p->subTotal;
+                                                $descontoTexto = '-';
+                                                if (isset($p->desconto) && $p->desconto > 0) {
+                                                    if ($p->tipo_desconto == 'porcento') {
+                                                        $descontoTexto = number_format($p->desconto, 2, ',', '.') . '% (R$ ' . number_format($p->valor_desconto, 2, ',', '.') . ')';
+                                                    } else {
+                                                        $descontoTexto = 'R$ ' . number_format($p->valor_desconto ?: $p->desconto, 2, ',', '.');
+                                                    }
+                                                }
+                                                echo '<tr>';
+                                                echo '<td>' . $p->descricao . '</td>';
+                                                echo '<td><div align="center">' . $p->quantidade . '</div></td>';
+                                                echo '<td><div align="center">R$: ' . number_format($p->preco ?: $p->precoVenda, 2, ',', '.') . '</div></td>';
+                                                echo '<td><div align="center">' . $descontoTexto . '</div></td>';
+                                                echo (strtolower($result->status) != "cancelado") ? '<td><div align="center"><a href="" idAcao="' . $p->idProdutos_os . '" prodAcao="' . $p->idProdutos . '" quantAcao="' . $p->quantidade . '" title="Excluir Produto" class="btn-nwe4"><i class="bx bx-trash-alt"></i></a></div></td>' : '<td></td>';
+                                                echo '<td><div align="center">R$: ' . number_format($p->subTotal, 2, ',', '.') . '</div></td>';
+                                                echo '</tr>';
+                                            } ?>
                                         </tbody>
                                         <tfoot>
                                             <tr>
-                                                <td colspan="4" style="text-align: right"><strong>Total:</strong>
+                                                <td colspan="5" style="text-align: right"><strong>Total:</strong>
                                                 </td>
                                                 <td>
                                                     <div align="center"><strong>R$
@@ -289,7 +310,7 @@ foreach ($produtos as $p) {
                             <div class="span12 well" style="padding: 1%; margin-left: 0">
                                 <form id="formServicos" action="<?php echo base_url() ?>index.php/os/adicionarServico"
                                     method="post">
-                                    <div class="span6">
+                                    <div class="span4">
                                         <input type="hidden" name="idServico" id="idServico" />
                                         <input type="hidden" name="idOsServico" id="idOsServico"
                                             value="<?php echo $result->idOs; ?>" />
@@ -308,6 +329,17 @@ foreach ($produtos as $p) {
                                         <input type="text" placeholder="Quantidade" id="quantidade_servico"
                                             name="quantidade" class="span12" />
                                     </div>
+                                    <div class="span1">
+                                        <label for="">Tipo Desc.</label>
+                                        <select class="span12" name="tipo_desconto" id="tipo_desconto_servico" style="width: 100%;">
+                                            <option value="real">R$</option>
+                                            <option value="porcento">%</option>
+                                        </select>
+                                    </div>
+                                    <div class="span1">
+                                        <label for="">Desconto</label>
+                                        <input type="text" placeholder="0" id="desconto_servico" name="desconto" class="span12" />
+                                    </div>
                                     <div class="span2">
                                         <label for="">&nbsp;</label>
                                         <button class="button btn btn-success">
@@ -324,29 +356,39 @@ foreach ($produtos as $p) {
                                                 <th>Serviço</th>
                                                 <th width="8%">Quantidade</th>
                                                 <th width="10%">Preço</th>
+                                                <th width="12%">Desconto</th>
                                                 <th width="6%">Ações</th>
-                                                <th width="10%">Sub-totals</th>
+                                                <th width="10%">Sub-total</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php
-$totals = 0;
-foreach ($servicos as $s) {
-    $preco = $s->preco ?: $s->precoVenda;
-    $subtotals = $preco * ($s->quantidade ?: 1);
-    $totals = $totals + $subtotals;
-    echo '<tr>';
-    echo '<td>' . $s->nome . '</td>';
-    echo '<td><div align="center">' . ($s->quantidade ?: 1) . '</div></td>';
-    echo '<td><div align="center">R$ ' . $preco . '</div></td>';
-    echo '<td><div align="center"><span idAcao="' . $s->idServicos_os . '" title="Excluir Serviço" class="btn-nwe4 servico"><i class="bx bx-trash-alt"></i></span></div></td>';
-    echo '<td><div align="center">R$: ' . number_format($subtotals, 2, ',', '.') . '</div></td>';
-    echo '</tr>';
-} ?>
+                                            $totals = 0;
+                                            foreach ($servicos as $s) {
+                                                $preco = $s->preco ?: $s->precoVenda;
+                                                $subtotals = isset($s->subTotal) && $s->subTotal !== null ? $s->subTotal : ($preco * ($s->quantidade ?: 1));
+                                                $totals = $totals + $subtotals;
+                                                $descontoTexto = '-';
+                                                if (isset($s->desconto) && $s->desconto > 0) {
+                                                    if ($s->tipo_desconto == 'porcento') {
+                                                        $descontoTexto = number_format($s->desconto, 2, ',', '.') . '% (R$ ' . number_format($s->valor_desconto, 2, ',', '.') . ')';
+                                                    } else {
+                                                        $descontoTexto = 'R$ ' . number_format($s->valor_desconto ?: $s->desconto, 2, ',', '.');
+                                                    }
+                                                }
+                                                echo '<tr>';
+                                                echo '<td>' . $s->nome . '</td>';
+                                                echo '<td><div align="center">' . ($s->quantidade ?: 1) . '</div></td>';
+                                                echo '<td><div align="center">R$ ' . number_format($preco, 2, ',', '.') . '</div></td>';
+                                                echo '<td><div align="center">' . $descontoTexto . '</div></td>';
+                                                echo '<td><div align="center"><span idAcao="' . $s->idServicos_os . '" title="Excluir Serviço" class="btn-nwe4 servico"><i class="bx bx-trash-alt"></i></span></div></td>';
+                                                echo '<td><div align="center">R$: ' . number_format($subtotals, 2, ',', '.') . '</div></td>';
+                                                echo '</tr>';
+                                            } ?>
                                         </tbody>
                                         <tfoot>
                                             <tr>
-                                                <td colspan="4" style="text-align: right"><strong>Total:</strong>
+                                                <td colspan="5" style="text-align: right"><strong>Total:</strong>
                                                 </td>
                                                 <td>
                                                     <div align="center"><strong>R$
@@ -605,6 +647,44 @@ if (!$anotacoes) {
 
     $("#quantidade").keyup(function () {
         this.value = this.value.replace(/[^0-9.]/g, '');
+    });
+
+    $("#desconto_produto").keyup(function () {
+        this.value = this.value.replace(/[^0-9.]/g, '');
+        var preco = parseFloat($("#preco").val()) || 0;
+        var quantidade = parseFloat($("#quantidade").val()) || 0;
+        var totalBruto = preco * quantidade;
+        var tipoDesc = $("#tipo_desconto_produto").val();
+        var valDesc = parseFloat(this.value) || 0;
+
+        if (tipoDesc === 'porcento' && valDesc > 100) {
+            this.value = 100;
+        } else if (tipoDesc === 'real' && valDesc > totalBruto && totalBruto > 0) {
+            this.value = totalBruto.toFixed(2);
+        }
+    });
+
+    $("#tipo_desconto_produto").change(function () {
+        $("#desconto_produto").trigger("keyup");
+    });
+
+    $("#desconto_servico").keyup(function () {
+        this.value = this.value.replace(/[^0-9.]/g, '');
+        var preco = parseFloat($("#preco_servico").val()) || 0;
+        var quantidade = parseFloat($("#quantidade_servico").val()) || 0;
+        var totalBruto = preco * quantidade;
+        var tipoDesc = $("#tipo_desconto_servico").val();
+        var valDesc = parseFloat(this.value) || 0;
+
+        if (tipoDesc === 'porcento' && valDesc > 100) {
+            this.value = 100;
+        } else if (tipoDesc === 'real' && valDesc > totalBruto && totalBruto > 0) {
+            this.value = totalBruto.toFixed(2);
+        }
+    });
+
+    $("#tipo_desconto_servico").change(function () {
+        $("#desconto_servico").trigger("keyup");
     });
 
     $("#quantidade_servico").keyup(function () {
@@ -984,6 +1064,7 @@ if (!$anotacoes) {
                                 $("#divProdutos").load("<?php echo current_url(); ?> #divProdutos");
                                 $("#quantidade").val('');
                                 $("#preco").val('');
+                                $("#desconto_produto").val('');
                                 $("#resultado").val('');
                                 $("#desconto").val('');
                                 $("#divValorTotal").load("<?php echo current_url(); ?> #divValorTotal");
@@ -1039,6 +1120,7 @@ if (!$anotacoes) {
                             $("#divServicos").load("<?php echo current_url(); ?> #divServicos");
                             $("#quantidade_servico").val('');
                             $("#preco_servico").val('');
+                            $("#desconto_servico").val('');
                             $("#resultado").val('');
                             $("#desconto").val('');
                             $("#divValorTotal").load("<?php echo current_url(); ?> #divValorTotal");
