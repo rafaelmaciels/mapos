@@ -34,6 +34,9 @@
                             <a target="_blank" title="Impressão Cupom Não Fical" class="button btn btn-mini btn-inverse" href="<?php echo site_url() ?>/os/imprimirTermica/<?php echo $result->idOs; ?>">
                                 <span class="button__icon"><i class='bx bx-receipt'></i></span> <span class="button__text">Cupom 80mm</span>
                             </a>
+                            <a href="#modal-etiqueta-os" role="button" data-toggle="modal" title="Imprimir Etiqueta da OS" class="button btn btn-mini btn-inverse">
+                                <span class="button__icon"><i class='bx bx-tag'></i></span> <span class="button__text">Etiqueta OS</span>
+                            </a>
                             <?php if ($result->garantias_id && strtolower(trim($result->status)) === 'finalizado') { ?>
                                 <a target="_blank" title="Imprimir Termo de Garantia" class="button btn btn-mini btn-inverse" href="<?php echo site_url() ?>/garantias/imprimirGarantiaOs/<?php echo $result->idOs; ?>">
                                     <span class="button__icon"><i class="bx bx-paperclip"></i></span> <span class="button__text">Termo Garantia</span>
@@ -534,6 +537,37 @@ if (!$anotacoes) {
         <div class="modal-footer" style="display:flex;justify-content: center">
             <button class="btn" data-dismiss="modal" aria-hidden="true" id="btn-close-anotacao">Fechar</button>
             <button class="btn btn-primary">Adicionar</button>
+        </div>
+    </form>
+</div>
+
+<!-- Modal Etiqueta OS -->
+<div id="modal-etiqueta-os" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalEtiquetaLabel" aria-hidden="true">
+    <form id="formEtiquetaOS">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="modalEtiquetaLabel">Imprimir Etiqueta da OS</h3>
+        </div>
+        <div class="modal-body">
+            <div class="span12 alert alert-info" style="margin-left: 0">
+                Selecione a quantidade de vias para a impressão da etiqueta.
+            </div>
+            <div class="span12" style="margin-left: 0">
+                <label><strong>Nº da OS:</strong></label>
+                <input class="span12" type="text" value="<?php echo $result->idOs; ?>" readonly />
+            </div>
+            <div class="span12" style="margin-left: 0; margin-top: 10px;">
+                <label><strong>Cliente:</strong></label>
+                <input class="span12" type="text" value="<?php echo htmlspecialchars($result->nomeCliente); ?>" readonly />
+            </div>
+            <div class="span12" style="margin-left: 0; margin-top: 10px;">
+                <label for="qtd-vias-etiqueta"><strong>Quantidade de Vias (Cópias):*</strong></label>
+                <input class="span12" id="qtd-vias-etiqueta" type="number" name="qtd" min="1" max="100" value="1" required />
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+            <button type="button" id="btnImprimirEtiquetaOS" class="btn btn-primary"><i class="bx bx-printer"></i> Gerar Etiqueta</button>
         </div>
     </form>
 </div>
@@ -1345,6 +1379,15 @@ if (!$anotacoes) {
         $('.editor').trumbowyg({
             lang: 'pt_br',
             semantic: { 'strikethrough': 's', }
+        });
+
+        $("#btnImprimirEtiquetaOS").click(function(e) {
+            e.preventDefault();
+            var qtd = $("#qtd-vias-etiqueta").val() || 1;
+            if (qtd < 1) qtd = 1;
+            var url = "<?php echo site_url('os/imprimirEtiqueta/' . $result->idOs); ?>?qtd=" + qtd;
+            window.open(url, '_blank');
+            $("#modal-etiqueta-os").modal('hide');
         });
     });
 </script>

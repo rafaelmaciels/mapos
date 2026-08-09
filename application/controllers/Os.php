@@ -482,6 +482,34 @@ class Os extends MY_Controller
         $this->load->view('os/imprimirOsTermica', $this->data);
     }
 
+    public function imprimirEtiqueta()
+    {
+        if (! $this->uri->segment(3) || ! is_numeric($this->uri->segment(3))) {
+            $this->session->set_flashdata('error', 'Item não pode ser encontrado, parâmetro não foi passado corretamente.');
+            redirect('mapos');
+        }
+
+        if (! $this->permission->checkPermission($this->session->userdata('permissao'), 'vOs')) {
+            $this->session->set_flashdata('error', 'Você não tem permissão para visualizar O.S.');
+            redirect(base_url());
+        }
+
+        $this->data['custom_error'] = '';
+        $this->load->model('mapos_model');
+        $this->data['result'] = $this->os_model->getById($this->uri->segment(3));
+
+        if (! $this->data['result']) {
+            $this->session->set_flashdata('error', 'OS não encontrada.');
+            redirect('os/gerenciar');
+        }
+
+        $this->data['emitente'] = $this->mapos_model->getEmitente();
+        $qtd = (int) $this->input->get('qtd');
+        $this->data['qtd'] = ($qtd > 0) ? $qtd : 1;
+
+        $this->load->view('os/imprimirEtiqueta', $this->data);
+    }
+
     public function enviar_email()
     {
         if (! $this->uri->segment(3) || ! is_numeric($this->uri->segment(3))) {
