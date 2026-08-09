@@ -420,26 +420,20 @@ $endereco_empresa = isset($emitente->rua) && !empty($emitente->rua) ? $emitente-
                     <div class="rms-history-pillars">
                         <div class="rms-pillar-item">
                             <div class="rms-pillar-badge">RM.</div>
-                            <div>
-                                <h4 style="color: #ffffff; margin-bottom: 0.3rem;">Iniciais do Fundador</h4>
-                                <p style="font-size: 0.9rem;">Representa identidade pessoal, autoria, responsabilidade direta e compromisso com o cliente.</p>
-                            </div>
+                            <h4 style="color: #ffffff; margin: 0.2rem 0 0.2rem 0;">Iniciais do Fundador</h4>
+                            <p style="font-size: 0.9rem; margin: 0; color: var(--rms-text-muted);">Representa identidade pessoal, autoria, responsabilidade direta e compromisso com o cliente.</p>
                         </div>
 
                         <div class="rms-pillar-item">
                             <div class="rms-pillar-badge">SOLLUTIONS</div>
-                            <div>
-                                <h4 style="color: #ffffff; margin-bottom: 0.3rem;">Homenagem com Propósito</h4>
-                                <p style="font-size: 0.9rem;">A grafia com dois "L" é intencional: <strong>SOL + LUTIONS</strong>, uma linda homenagem à filha MariSol.</p>
-                            </div>
+                            <h4 style="color: #ffffff; margin: 0.2rem 0 0.2rem 0;">Homenagem com Propósito</h4>
+                            <p style="font-size: 0.9rem; margin: 0; color: var(--rms-text-muted);">A grafia com dois "L" é intencional: <strong>SOL + LUTIONS</strong>, uma linda homenagem à filha MariSol.</p>
                         </div>
 
                         <div class="rms-pillar-item">
                             <div class="rms-pillar-badge">PONTO AZUL</div>
-                            <div>
-                                <h4 style="color: #ffffff; margin-bottom: 0.3rem;">Capacitor Eletrônico</h4>
-                                <p style="font-size: 0.9rem;">O ponto azul no "RM." é inspirado em um capacitor eletrônico: o elemento que armazena e fornece <strong>Energia para Soluções</strong>.</p>
-                            </div>
+                            <h4 style="color: #ffffff; margin: 0.2rem 0 0.2rem 0;">Capacitor Eletrônico</h4>
+                            <p style="font-size: 0.9rem; margin: 0; color: var(--rms-text-muted);">O ponto azul no "RM." é inspirado em um capacitor eletrônico: o elemento que armazena e fornece <strong>Energia para Soluções</strong>.</p>
                         </div>
                     </div>
                 </div>
