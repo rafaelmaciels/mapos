@@ -839,3 +839,303 @@ body.rms-landing-body .rms-input-container .rms-password-toggle:hover {
     scroll-behavior: auto !important;
   }
 }
+
+/* ==========================================================================
+   REGISTRATION PAGE & FORM DESIGN SYSTEM STYLES
+   ========================================================================== */
+
+/* Neutralize Bootstrap .form-horizontal float & margin interference */
+body.rms-landing-body .form-horizontal .control-group,
+body.rms-landing-body .rms-form-group {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  margin-bottom: 1.25rem !important;
+  padding: 0 !important;
+  border: none !important;
+  display: flex !important;
+  flex-direction: column !important;
+  width: 100% !important;
+  min-width: 0 !important;
+}
+
+body.rms-landing-body .form-horizontal .control-label,
+body.rms-landing-body .rms-form-label {
+  float: none !important;
+  width: 100% !important;
+  text-align: left !important;
+  padding-top: 0 !important;
+  margin-bottom: 0.45rem !important;
+  display: block !important;
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  color: var(--rms-text-main) !important;
+}
+
+body.rms-landing-body .form-horizontal .controls,
+body.rms-landing-body .rms-input-container {
+  margin-left: 0 !important;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  position: relative !important;
+  width: 100% !important;
+  min-width: 0 !important;
+}
+
+/* Fix Webkit Autofill (Chrome/Edge white background bug) */
+body.rms-landing-body input:-webkit-autofill,
+body.rms-landing-body input:-webkit-autofill:hover, 
+body.rms-landing-body input:-webkit-autofill:focus, 
+body.rms-landing-body input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px #070d1e inset !important;
+  -webkit-text-fill-color: #ffffff !important;
+  transition: background-color 5000s ease-in-out 0s !important;
+}
+
+.rms-register-section {
+  padding-top: 150px !important;
+  padding-bottom: 80px !important;
+  position: relative;
+  background: radial-gradient(circle at 50% 20%, rgba(0, 102, 255, 0.15) 0%, transparent 65%);
+}
+
+.rms-register-wrapper {
+  max-width: 860px !important;
+  width: 100% !important;
+  margin: 0 auto !important;
+}
+
+.rms-register-card {
+  background: rgba(11, 19, 41, 0.85) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(0, 168, 255, 0.35) !important;
+  border-radius: var(--rms-radius-xl) !important;
+  padding: 2.5rem 2.25rem !important;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), var(--rms-glow-shadow) !important;
+  width: 100% !important;
+  overflow: hidden !important;
+}
+
+@media (max-width: 576px) {
+  .rms-register-card {
+    padding: 1.75rem 1.25rem !important;
+    border-radius: var(--rms-radius-lg) !important;
+  }
+}
+
+.rms-form-section-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--rms-blue-neon);
+  margin-top: 1.75rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(0, 168, 255, 0.2);
+  letter-spacing: 0.02em;
+}
+
+.rms-form-section-header:first-of-type {
+  margin-top: 0.5rem;
+}
+
+.rms-form-grid-2 {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 1.25rem !important;
+  width: 100% !important;
+}
+
+.rms-form-grid-2 > div {
+  min-width: 0 !important;
+}
+
+@media (min-width: 640px) {
+  .rms-form-grid-2 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  
+  .rms-form-grid-full {
+    grid-column: span 2 !important;
+  }
+}
+
+.rms-required {
+  color: var(--rms-error);
+  font-weight: 700;
+  margin-left: 2px;
+}
+
+/* Specific Input Padding Overrides */
+body.rms-landing-body #documento.rms-input {
+  padding-right: 5.5rem !important;
+}
+
+/* Custom Select Styling */
+body.rms-landing-body .rms-input-container select.rms-input {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2300a8ff'%3e%3cpath d='M12 16l-6-6h12z'/%3e%3c/svg%3e") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 1rem center !important;
+  background-size: 1.25rem !important;
+  padding-right: 2.75rem !important;
+  cursor: pointer;
+}
+
+body.rms-landing-body .rms-input-container select.rms-input option {
+  background-color: #070d1e;
+  color: #ffffff;
+  padding: 0.5rem;
+}
+
+/* Action button inside input container (e.g. Buscar CNPJ) */
+body.rms-landing-body .rms-input-container .rms-input-action-btn {
+  position: absolute !important;
+  right: 0.4rem !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  height: 38px !important;
+  padding: 0 0.85rem !important;
+  background: rgba(0, 102, 255, 0.2) !important;
+  border: 1px solid rgba(0, 168, 255, 0.4) !important;
+  color: var(--rms-blue-neon) !important;
+  border-radius: var(--rms-radius-sm) !important;
+  font-size: 0.825rem !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.4rem !important;
+  transition: var(--rms-transition) !important;
+  z-index: 10 !important;
+  outline: none !important;
+}
+
+body.rms-landing-body .rms-input-container .rms-input-action-btn:hover {
+  background: var(--rms-blue-primary) !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 12px var(--rms-blue-neon) !important;
+}
+
+/* Password Toggle Icon Alignment */
+body.rms-landing-body .rms-input-container .rms-password-toggle {
+  position: absolute !important;
+  right: 0.8rem !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  background: transparent !important;
+  border: none !important;
+  color: var(--rms-text-muted) !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  z-index: 10 !important;
+  outline: none !important;
+  padding: 0.25rem !important;
+}
+
+/* Captcha Styling */
+.rms-captcha-box {
+  background: rgba(2, 6, 23, 0.6);
+  border: 1px solid var(--rms-border);
+  border-radius: var(--rms-radius-md);
+  padding: 1.25rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+
+.rms-captcha-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.rms-captcha-img-card {
+  background: #ffffff;
+  border-radius: var(--rms-radius-sm);
+  padding: 4px 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.rms-captcha-img-card img {
+  height: 42px;
+  width: auto;
+  display: block;
+}
+
+.rms-captcha-reload-btn {
+  background: rgba(0, 168, 255, 0.15);
+  border: 1px solid rgba(0, 168, 255, 0.35);
+  color: var(--rms-blue-neon);
+  height: 42px;
+  padding: 0 1rem;
+  border-radius: var(--rms-radius-sm);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--rms-transition);
+}
+
+.rms-captcha-reload-btn:hover {
+  background: var(--rms-blue-primary);
+  color: #ffffff;
+  box-shadow: 0 0 15px rgba(0, 168, 255, 0.4);
+}
+
+/* Alert Error Box */
+.rms-alert {
+  padding: 1rem 1.25rem;
+  border-radius: var(--rms-radius-md);
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.rms-alert-danger {
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: #fca5a5;
+}
+
+.rms-alert-danger .form_error {
+  color: #fca5a5;
+}
+
+/* Validation Styling (MapOS & jQuery validate integration) */
+.rms-form-group.error .rms-input,
+.control-group.error .rms-input,
+.rms-input.error {
+  border-color: var(--rms-error) !important;
+  box-shadow: 0 0 12px rgba(239, 68, 68, 0.35) !important;
+}
+
+span.help-inline,
+.help-inline {
+  display: block !important;
+  color: var(--rms-error) !important;
+  font-size: 0.8rem !important;
+  font-weight: 500 !important;
+  margin-top: 0.35rem !important;
+  padding-left: 0.25rem !important;
+}
+
+
