@@ -183,11 +183,18 @@ class Mine extends CI_Controller
         header('Access-Control-Max-Age: 1000');
         header('Access-Control-Allow-Headers: Content-Type');
 
+        $isAjax = $this->input->is_ajax_request() || $this->input->get('ajax');
+
         $this->load->library('form_validation');
         $this->form_validation->set_rules('email', 'E-mail', 'valid_email|required|trim');
         $this->form_validation->set_rules('senha', 'Senha', 'required|trim');
         if ($this->form_validation->run() == false) {
-            echo json_encode(['result' => false, 'message' => validation_errors()]);
+            if ($isAjax) {
+                echo json_encode(['result' => false, 'message' => validation_errors()]);
+            } else {
+                $this->session->set_flashdata('error', validation_errors());
+                redirect('mine');
+            }
         } else {
             $email = $this->input->post('email');
             $password = $this->input->post('senha');
@@ -196,8 +203,7 @@ class Mine extends CI_Controller
             if ($cliente) {
                 // Verificar credenciais do usuário
                 if (password_verify($password, $cliente->senha)) {
-                    // Novo ID de sessão a cada autenticação, para que um ID
-                    // fixado antes do login não continue válido depois dele.
+                    // Novo ID de sessão a cada autenticação
                     $this->session->sess_regenerate(true);
 
                     $session_mine_data = [
@@ -222,14 +228,26 @@ class Mine extends CI_Controller
 
                     $this->Audit_model->add($log_data);
 
-                    echo json_encode(['result' => true]);
+                    if ($isAjax) {
+                        echo json_encode(['result' => true]);
+                    } else {
+                        redirect('mine/painel');
+                    }
                 } else {
-                    echo json_encode(['result' => false, 'message' => 'Os dados de acesso estão incorretos.', 'MAPOS_TOKEN' => $this->security->get_csrf_hash()]);
+                    if ($isAjax) {
+                        echo json_encode(['result' => false, 'message' => 'Os dados de acesso estão incorretos.', 'MAPOS_TOKEN' => $this->security->get_csrf_hash()]);
+                    } else {
+                        $this->session->set_flashdata('error', 'Os dados de acesso estão incorretos.');
+                        redirect('mine');
+                    }
                 }
             } else {
-                // Mesma mensagem do erro de senha: mensagens distintas revelam
-                // quais e-mails possuem cadastro.
-                echo json_encode(['result' => false, 'message' => 'Os dados de acesso estão incorretos.', 'MAPOS_TOKEN' => $this->security->get_csrf_hash()]);
+                if ($isAjax) {
+                    echo json_encode(['result' => false, 'message' => 'Os dados de acesso estão incorretos.', 'MAPOS_TOKEN' => $this->security->get_csrf_hash()]);
+                } else {
+                    $this->session->set_flashdata('error', 'Os dados de acesso estão incorretos.');
+                    redirect('mine');
+                }
             }
         }
     }
