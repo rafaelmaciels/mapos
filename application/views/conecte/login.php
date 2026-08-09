@@ -526,7 +526,7 @@ $endereco_empresa = isset($emitente->rua) && !empty($emitente->rua) ? $emitente-
                 </div>
 
                 <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                    <a href="https://api.whatsapp.com/send?phone=<?php echo preg_replace('/[^0-9]/', '', $telefone_empresa); ?>&text=Ol%C3%A1!%20Gostaria%20de%20solicitar%20um%20atendimento%20t%C3%A9cnico." target="_blank" class="rms-btn rms-btn-primary">
+                    <a href="https://api.whatsapp.com/send?phone=55<?php echo preg_replace('/[^0-9]/', '', $telefone_empresa); ?>&text=Ol%C3%A1!%20Gostaria%20de%20solicitar%20um%20atendimento%20t%C3%A9cnico." target="_blank" class="rms-btn rms-btn-primary">
                         <i class='bx bxl-whatsapp' style="font-size: 1.25rem;"></i> Falar no WhatsApp
                     </a>
                 </div>
