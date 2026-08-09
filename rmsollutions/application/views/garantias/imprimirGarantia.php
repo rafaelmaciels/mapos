@@ -112,7 +112,7 @@
                         </div>
 
                         <div style="width: 100%; margin-bottom: 10px; text-align: justify; font-size: 14px;">
-                            <?php echo printSafeHtml($result->textoGarantia) ?>
+                            <?php echo printSafeHtml($result->textoGarantia, get_defined_vars()); ?>
                         </div>
 
                         <table class="table table-bordered table-condensed" style="margin-bottom: 0;">

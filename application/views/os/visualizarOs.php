@@ -19,7 +19,7 @@
                             <a target="_blank" title="Impressão Cupom Não Fical" class="button btn btn-mini btn-inverse" href="<?php echo site_url() ?>/os/imprimirTermica/<?php echo $result->idOs; ?>">
                                 <span class="button__icon"><i class='bx bx-receipt'></i></span> <span class="button__text">Cupom 80mm</span>
                             </a>
-                            <?php if ($result->garantias_id) { ?>
+                            <?php if ($result->garantias_id && strtolower(trim($result->status)) === 'finalizado') { ?>
                                 <a target="_blank" title="Imprimir Termo de Garantia" class="button btn btn-mini btn-inverse" href="<?php echo site_url() ?>/garantias/imprimirGarantiaOs/<?php echo $result->idOs; ?>">
                                     <span class="button__icon"><i class="bx bx-paperclip"></i></span> <span class="button__text">Termo Garantia</span>
                                 </a>
@@ -31,11 +31,29 @@
                         $this->load->model('os_model');
                         $zapnumber = preg_replace("/[^0-9]/", "", $result->celular_cliente);
                         $troca = [$result->nomeCliente, $result->idOs, $result->status, 'R$ ' . ($result->desconto != 0 && $result->valor_desconto != 0 ? number_format($result->valor_desconto, 2, ',', '.') : number_format($totalProdutos + $totalServico, 2, ',', '.')), strip_tags($result->descricaoProduto), ($emitente ? $emitente->nome : ''), ($emitente ? $emitente->telefone : ''), strip_tags($result->observacoes), strip_tags($result->defeito), strip_tags($result->laudoTecnico), date('d/m/Y', strtotime($result->dataFinal)), date('d/m/Y', strtotime($result->dataInicial)), $result->garantia . ' dias'];
-                        $texto_de_notificacao = $this->os_model->criarTextoWhats($texto_de_notificacao, $troca);
+                        $texto_de_notificacao = $this->os_model->criarTextoWhats($texto_de_notificacao ?? '', $troca);
+                        
                         if (!empty($zapnumber)) {
+                            // Botão WhatsApp Padrão
                             echo '<a title="Enviar Por WhatsApp" class="button btn btn-mini btn-success" id="enviarWhatsApp" target="_blank" href="https://api.whatsapp.com/send?phone=55' . $zapnumber . '&text=' . $texto_de_notificacao . '">
                                 <span class="button__icon"><i class="bx bxl-whatsapp"></i></span> <span class="button__text">WhatsApp</span>
                             </a>';
+
+                            // --- INÍCIO DO NOVO BOTÃO WHATSAPP DE STATUS ---
+                            $valor_os_whats = ($result->desconto != 0 && $result->valor_desconto != 0) ? number_format($result->valor_desconto, 2, ',', '.') : number_format($totalProdutos + $totalServico, 2, ',', '.');
+                            $emitente_nome = $emitente ? $emitente->nome : '';
+                            $emitente_tel = $emitente ? $emitente->telefone : '';
+                            $descricao_prod = $result->descricaoProduto ? trim(strip_tags($result->descricaoProduto)) : '';
+                            
+                            // Montagem do texto personalizado
+                            $texto_status_personalizado = "Prezado(a), {$result->nomeCliente} a OS de nº {$result->idOs} teve o status alterado para: {$result->status} segue a descrição {$descricao_prod} com valor total de R$ {$valor_os_whats}! Para mais informações entre em contato conosco. Atenciosamente, {$emitente_nome} {$emitente_tel}.";
+                            $texto_status_encode = urlencode($texto_status_personalizado);
+
+                            // Botão Notificar Status
+                            echo '<a title="Notificar alteração de Status" class="button btn btn-mini btn-success" target="_blank" href="https://api.whatsapp.com/send?phone=55' . $zapnumber . '&text=' . $texto_status_encode . '">
+                                <span class="button__icon"><i class="bx bx-message-rounded-dots"></i></span> <span class="button__text">Notificar Status</span>
+                            </a>';
+                            // --- FIM DO NOVO BOTÃO WHATSAPP ---
                         }
                     } ?>
 
@@ -335,7 +353,6 @@ if (!empty($result->cidade) || !empty($result->estado) || !empty($result->cep)) 
 
 <?= $modalGerarPagamento ?>
 
-<!-- Modal visualizar anexo -->
 <div id="modal-anexo" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
     aria-hidden="true">
     <div class="modal-header">
@@ -356,7 +373,6 @@ if (!empty($result->cidade) || !empty($result->estado) || !empty($result->cep)) 
     </div>
 </div>
 
-<!-- Modal PIX -->
 <div id="modal-pix" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
     aria-hidden="true">
     <div class="modal-header">

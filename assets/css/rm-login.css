@@ -1,0 +1,483 @@
+/* =====================================================
+   RM. SOLLUTIONS - LOGIN PREMIUM
+   Compatível com Map-OS / CodeIgniter
+   ===================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+:root{
+
+    --rm-primary:#2563EB;
+    --rm-secondary:#06B6D4;
+    --rm-dark:#0F172A;
+    --rm-dark-2:#111827;
+    --rm-white:#FFFFFF;
+    --rm-light:#F8FAFC;
+    --rm-border:#E2E8F0;
+    --rm-text:#475569;
+    --rm-shadow:0 20px 50px rgba(15,23,42,.15);
+    --rm-radius:24px;
+
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html,
+body{
+    width:100%;
+    height:100%;
+    overflow-x:hidden;
+}
+
+body{
+
+    font-family:'Inter',sans-serif;
+
+    background:
+    linear-gradient(
+        135deg,
+        #0F172A 0%,
+        #1E3A8A 50%,
+        #2563EB 100%
+    );
+
+}
+
+/* ====================================
+   LAYOUT
+==================================== */
+
+.main-login{
+
+    min-height:100vh;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:40px;
+
+    padding:40px;
+
+}
+
+/* ====================================
+   PAINEL ESQUERDO
+==================================== */
+
+.left-login{
+
+    flex:1;
+
+    max-width:700px;
+
+    color:#fff;
+
+    animation:fadeLeft .8s ease;
+
+}
+
+.h-one{
+
+    font-size:3rem !important;
+
+    font-weight:800 !important;
+
+    line-height:1.1;
+
+    margin-bottom:20px;
+
+}
+
+.h-two{
+
+    font-size:1.2rem !important;
+
+    font-weight:400 !important;
+
+    color:rgba(255,255,255,.85);
+
+    margin-bottom:30px;
+
+}
+
+.left-login-image{
+
+    width:100%;
+
+    max-width:600px;
+
+    filter:drop-shadow(0 20px 50px rgba(0,0,0,.25));
+
+}
+
+/* ====================================
+   FORMULÁRIO
+==================================== */
+
+#formLogin{
+
+    width:100%;
+
+    max-width:520px;
+
+}
+
+.right-login{
+
+    width:100%;
+}
+
+.container{
+    width:100%;
+}
+
+.card{
+
+    border:none !important;
+
+    border-radius:var(--rm-radius) !important;
+
+    background:
+    rgba(255,255,255,.96) !important;
+
+    backdrop-filter:blur(20px);
+
+    box-shadow:var(--rm-shadow);
+
+    overflow:hidden;
+
+    animation:fadeUp .8s ease;
+
+}
+
+.content{
+
+    padding:50px;
+
+}
+
+/* ====================================
+   LOGO
+==================================== */
+
+.title01{
+
+    text-align:center;
+
+    margin-bottom:20px;
+
+}
+
+.title01 img{
+
+    max-width:240px;
+
+    height:auto;
+
+}
+
+#mcell{
+
+    text-align:center;
+
+    color:#64748B;
+
+    font-size:13px;
+
+    margin-bottom:30px;
+
+}
+
+/* ====================================
+   INPUTS
+==================================== */
+
+.input-field{
+
+    position:relative;
+
+    margin-bottom:18px;
+
+}
+
+.input-field label{
+
+    position:absolute;
+
+    left:18px;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    color:#64748B;
+
+    font-size:16px;
+
+    z-index:2;
+
+}
+
+.input-field input{
+
+    width:100%;
+
+    height:58px;
+
+    padding-left:50px;
+
+    border:1px solid var(--rm-border);
+
+    border-radius:16px;
+
+    outline:none;
+
+    background:#fff;
+
+    font-size:15px;
+
+    transition:.3s;
+
+}
+
+.input-field input:focus{
+
+    border-color:var(--rm-primary);
+
+    box-shadow:
+    0 0 0 5px rgba(37,99,235,.15);
+
+}
+
+/* ====================================
+   BOTÃO
+==================================== */
+
+.center{
+    margin-top:10px;
+}
+
+#btn-acessar{
+
+    width:100%;
+
+    height:58px;
+
+    border:none;
+
+    border-radius:16px;
+
+    font-size:16px;
+
+    font-weight:700;
+
+    color:#fff;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    background:
+    linear-gradient(
+        90deg,
+        #2563EB,
+        #06B6D4
+    );
+
+}
+
+#btn-acessar:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:
+    0 15px 35px rgba(37,99,235,.30);
+
+}
+
+#btn-acessar.disabled{
+
+    opacity:.7;
+
+    pointer-events:none;
+
+}
+
+/* ====================================
+   ALERTAS
+==================================== */
+
+.alert{
+
+    border-radius:14px !important;
+
+    margin-bottom:20px !important;
+
+}
+
+/* ====================================
+   MODAL
+==================================== */
+
+.modal{
+
+    border-radius:18px !important;
+
+}
+
+.modal-header{
+
+    background:#2563EB;
+
+    color:#fff;
+
+}
+
+.modal-footer .btn-primary{
+
+    background:#2563EB;
+
+    border:none;
+
+}
+
+/* ====================================
+   LINKS
+==================================== */
+
+.links-uteis{
+
+    text-align:center;
+
+    margin-top:25px;
+
+}
+
+.links-uteis a{
+
+    color:#64748B;
+
+    text-decoration:none;
+
+}
+
+.links-uteis a:hover{
+
+    color:#2563EB;
+
+}
+
+/* ====================================
+   RESPONSIVO
+==================================== */
+
+@media(max-width:991px){
+
+    .main-login{
+
+        flex-direction:column;
+
+        padding:20px;
+
+    }
+
+    .left-login{
+
+        text-align:center;
+
+    }
+
+    .h-one{
+
+        font-size:2rem !important;
+
+    }
+
+    .h-two{
+
+        font-size:1rem !important;
+
+    }
+
+    .left-login-image{
+
+        max-width:320px;
+
+    }
+
+}
+
+@media(max-width:576px){
+
+    .content{
+
+        padding:30px;
+
+    }
+
+    .card{
+
+        border-radius:20px !important;
+
+    }
+
+    .input-field input{
+
+        height:54px;
+
+    }
+
+    #btn-acessar{
+
+        height:54px;
+
+    }
+
+}
+
+/* ====================================
+   ANIMAÇÕES
+==================================== */
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+        transform:translateY(30px);
+
+    }
+
+    to{
+
+        opacity:1;
+        transform:translateY(0);
+
+    }
+
+}
+
+@keyframes fadeLeft{
+
+    from{
+
+        opacity:0;
+        transform:translateX(-40px);
+
+    }
+
+    to{
+
+        opacity:1;
+        transform:translateX(0);
+
+    }
+
+}

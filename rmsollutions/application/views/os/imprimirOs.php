@@ -82,7 +82,7 @@ $totalProdutos = 0;
                 <?php endif; ?>
 
                 <div class="subtitle">DADOS DO CLIENTE</div>
-                <div class="dados">
+                <div class="dados dados-cliente">
                     <div>
                         <span><b><?= $result->nomeCliente ?></b></span><br />
                         <span>CPF/CNPJ: <?= $result->documento ?></span><br />
@@ -135,7 +135,7 @@ $totalProdutos = 0;
                 <?php if ($result->garantias_id) : ?>
                     <div class="subtitle">TERMO DE GARANTIA</div>
                     <div class="dados">
-                        <div style="text-align: justify;"><?= printSafeHtml($result->textoGarantia) ?></div>
+                        <div style="text-align: justify;"><?= printSafeHtml($result->textoGarantia, get_defined_vars()) ?></div>
                     </div>
                 <?php endif; ?>
 

@@ -169,7 +169,16 @@ class Garantias extends MY_Controller
 
         $this->data['custom_error'] = '';
         $this->load->model('mapos_model');
+        $this->load->model('os_model');
         $this->data['osGarantia'] = $this->garantias_model->getByIdOsGarantia($this->uri->segment(3));
+        $this->data['result'] = $this->os_model->getById($this->uri->segment(3));
+
+        if (! $this->data['result'] || strtolower(trim($this->data['result']->status)) !== 'finalizado') {
+            $this->session->set_flashdata('error', 'O Termo de Garantia só está disponível quando a Ordem de Serviço estiver com o status de "Finalizado".');
+            redirect(site_url('os/visualizar/' . $this->uri->segment(3)));
+        }
+
+        $this->data['servicos'] = $this->os_model->getServicos($this->uri->segment(3));
         $this->data['emitente'] = $this->mapos_model->getEmitente();
 
         $this->load->view('garantias/imprimirGarantiaOs', $this->data);

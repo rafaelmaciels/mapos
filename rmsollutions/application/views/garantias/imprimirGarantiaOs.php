@@ -130,7 +130,7 @@
                                             <ul>
                                                 <li>
 
-                                                    <span><?php echo printSafeHtml($osGarantia->textoGarantia) ?></span><br />
+                                                    <span><?php echo printSafeHtml($osGarantia->textoGarantia, get_defined_vars()); ?></span><br />
                                                 </li>
                                             </ul>
                                         </td>
