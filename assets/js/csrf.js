@@ -6,14 +6,21 @@ function getCookie(name) {
 }
 
 function setCsrfTokenInAllForms(csrfTokenName, csrfCookieName) {
-    $('input[name="' + csrfTokenName + '"]').remove();
+    var cookieVal = getCookie(csrfCookieName);
+    if (!cookieVal || cookieVal === 'undefined') return;
+
     var forms = document.querySelectorAll("form");
     forms.forEach(function (form) {
-        var csrfInput = document.createElement('input');
-        csrfInput.type = 'hidden';
-        csrfInput.name = csrfTokenName;
-        csrfInput.value = getCookie(csrfCookieName);
-        form.appendChild(csrfInput);
+        var existing = form.querySelector('input[name="' + csrfTokenName + '"]');
+        if (existing) {
+            existing.value = cookieVal;
+        } else {
+            var csrfInput = document.createElement('input');
+            csrfInput.type = 'hidden';
+            csrfInput.name = csrfTokenName;
+            csrfInput.value = cookieVal;
+            form.appendChild(csrfInput);
+        }
     });
 }
 
@@ -27,12 +34,18 @@ $(document).ready(function () {
     $.ajaxSetup({
         credentials: "include",
         beforeSend: function (jqXHR, settings) {
-            if (typeof settings.data === 'object') {
-                settings.data[csrfTokenName] = getCookie(csrfCookieName);
-            } else {
-                settings.data += '&' + $.param({
-                    [csrfTokenName]: getCookie(csrfCookieName)
-                });
+            var cookieToken = getCookie(csrfCookieName);
+
+            if (typeof settings.data === 'object' && settings.data !== null) {
+                if (cookieToken) {
+                    settings.data[csrfTokenName] = cookieToken;
+                }
+            } else if (typeof settings.data === 'string') {
+                if (cookieToken && settings.data.indexOf(csrfTokenName + '=') === -1) {
+                    settings.data += (settings.data.length > 0 ? '&' : '') + $.param({
+                        [csrfTokenName]: cookieToken
+                    });
+                }
             }
 
             return true;
@@ -42,3 +55,4 @@ $(document).ready(function () {
         }
     });
 });
+

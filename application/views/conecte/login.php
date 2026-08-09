@@ -652,6 +652,14 @@ $endereco_empresa = isset($emitente->rua) && !empty($emitente->rua) ? $emitente-
                     }
                 },
                 submitHandler: function(form) {
+                    var csrfName = '<?= $this->security->get_csrf_token_name(); ?>';
+                    var csrfCookieName = '<?= config_item("csrf_cookie_name") ?>';
+                    var cookieToken = getCookie(csrfCookieName);
+
+                    if (cookieToken && cookieToken !== 'undefined') {
+                        $(form).find('input[name="' + csrfName + '"]').val(cookieToken);
+                    }
+
                     var dados = $(form).serialize();
                     var $btn = $('#btnAcessar');
                     var originalHtml = $btn.html();
@@ -672,13 +680,15 @@ $endereco_empresa = isset($emitente->rua) && !empty($emitente->rua) ? $emitente-
                                 Swal.fire({
                                     position: 'center',
                                     icon: 'error',
-                                    title: 'Os dados de acesso estão incorretos.\nPor favor, tente novamente!',
+                                    title: data.message || 'Os dados de acesso estão incorretos.\nPor favor, tente novamente!',
                                     showConfirmButton: false,
                                     timer: 4000
                                 });
 
-                                var newCsrfToken = data.MAPOS_TOKEN;
-                                $("input[name='<?= $this->security->get_csrf_token_name(); ?>']").val(newCsrfToken);
+                                if (data.MAPOS_TOKEN) {
+                                    $("input[name='" + csrfName + "']").val(data.MAPOS_TOKEN);
+                                    document.cookie = csrfCookieName + '=' + data.MAPOS_TOKEN + '; path=/';
+                                }
                             }
                         },
                         error: function() {
