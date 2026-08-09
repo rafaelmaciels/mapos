@@ -15,7 +15,9 @@ class Mine extends CI_Controller
 
     public function index()
     {
-        $this->load->view('conecte/login');
+        $this->load->model('Mapos_model');
+        $data['emitente'] = $this->Mapos_model->getEmitente();
+        $this->load->view('conecte/login', $data);
     }
 
     public function sair()
