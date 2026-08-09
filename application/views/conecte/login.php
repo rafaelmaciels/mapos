@@ -192,7 +192,7 @@ $endereco_empresa = isset($emitente->rua) && !empty($emitente->rua) ? $emitente-
                 <!-- Card 4 -->
                 <div class="rms-card">
                     <div class="rms-card-icon">
-                        <i class='bx bx-bug-shield'></i>
+                        <i class='bx bx-shield-quarter'></i>
                     </div>
                     <h3 class="rms-card-title">Remoção de Vírus</h3>
                     <p class="rms-card-text">Diagnóstico profundo para eliminação de vírus, malwares, trojans e softwares maliciosos que prejudicam o computador.</p>

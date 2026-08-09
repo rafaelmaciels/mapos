@@ -591,56 +591,79 @@ body.rms-landing-body {
   margin-bottom: 0.5rem;
 }
 
-.rms-input-container {
-  position: relative;
-  display: flex;
-  align-items: center;
+body.rms-landing-body .rms-input-container {
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  width: 100% !important;
 }
 
-.rms-input-icon {
-  position: absolute;
-  left: 1rem;
-  color: var(--rms-blue-neon);
-  font-size: 1.25rem;
-  pointer-events: none;
+body.rms-landing-body .rms-input-container .rms-input {
+  width: 100% !important;
+  height: 50px !important;
+  line-height: 50px !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  padding-left: 3rem !important;  /* Space for left icon */
+  padding-right: 3rem !important; /* Space for right password toggle icon */
+  background: var(--rms-bg-input) !important;
+  border: 1px solid var(--rms-border) !important;
+  border-radius: var(--rms-radius-md) !important;
+  color: #ffffff !important;
+  font-size: 1rem !important;
+  font-family: var(--rms-font) !important;
+  box-shadow: none !important;
+  box-sizing: border-box !important;
+  transition: var(--rms-transition) !important;
 }
 
-.rms-input {
-  width: 100%;
-  padding: 0.85rem 1rem 0.85rem 2.8rem;
-  background: var(--rms-bg-input);
-  border: 1px solid var(--rms-border);
-  border-radius: var(--rms-radius-md);
-  color: #ffffff;
-  font-size: 0.975rem;
-  font-family: var(--rms-font);
-  transition: var(--rms-transition);
+body.rms-landing-body .rms-input-container .rms-input:focus {
+  outline: none !important;
+  border-color: var(--rms-blue-neon) !important;
+  box-shadow: 0 0 15px rgba(0, 168, 255, 0.35) !important;
+  background: #091228 !important;
 }
 
-.rms-input:focus {
-  outline: none;
-  border-color: var(--rms-blue-neon);
-  box-shadow: 0 0 15px rgba(0, 168, 255, 0.3);
-  background: #091228;
+body.rms-landing-body .rms-input-container .rms-input-icon {
+  position: absolute !important;
+  left: 1rem !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  color: var(--rms-blue-neon) !important;
+  font-size: 1.3rem !important;
+  line-height: 1 !important;
+  pointer-events: none !important;
+  z-index: 10 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
 
-.rms-password-toggle {
-  position: absolute;
-  right: 1rem;
-  background: transparent;
-  border: none;
-  color: var(--rms-text-muted);
-  font-size: 1.2rem;
-  cursor: pointer;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: var(--rms-transition);
+body.rms-landing-body .rms-input-container .rms-password-toggle {
+  position: absolute !important;
+  right: 1rem !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  margin: 0 !important;
+  padding: 0.3rem !important;
+  background: transparent !important;
+  border: none !important;
+  color: var(--rms-text-muted) !important;
+  font-size: 1.3rem !important;
+  line-height: 1 !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: var(--rms-transition) !important;
+  z-index: 10 !important;
+  outline: none !important;
 }
 
-.rms-password-toggle:hover {
-  color: #ffffff;
+body.rms-landing-body .rms-input-container .rms-password-toggle:hover {
+  color: #ffffff !important;
 }
 
 .rms-login-actions {
